@@ -13,7 +13,7 @@ contract ProjectFactory is Owned {
         uint amount;
         uint creationDate;
         uint endDate;
-        States states;
+        States state;
         address[] contributorsAddresses;
         mapping(address => uint) contributors;
     }
@@ -25,7 +25,7 @@ contract ProjectFactory is Owned {
     mapping(address => uint) ownerProjectsCount;
 
     function createProject(string _name, uint _amount, uint _days) public {
-        uint id = Projects.push(Project(_name, _amount, now, uint(now + _days), OPEN)) - 1;
+        uint id = projects.push(Project(_name, _amount, now, uint(now + _days), States.OPEN, new address[](10))) - 1;
         projectsToOwner[id] = msg.sender;
         ownerProjectsCount[msg.sender]++;
         emit NewProject(id, _name, _amount);
