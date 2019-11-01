@@ -1,4 +1,6 @@
 pragma solidity ^0.4.25;
+// To return array of futureTransactions to client
+pragma experimental ABIEncoderV2;
 
 import "./Owned.sol";
 import "./SafeMath.sol";
@@ -29,5 +31,17 @@ contract ProjectFactory is Owned {
         projectsToOwner[id] = msg.sender;
         ownerProjectsCount[msg.sender]++;
         emit NewProject(id, _name, _amount);
+    }
+
+    function contribute(uint _id) public payable {
+        Project storage project = projects[_id];
+        project.contributors[msg.sender] += msg.value;
+        project.contributorsAddresses.push(msg.sender);
+        project.amount += msg.value;
+    }
+
+    function getAmountContributedFor(uint projectId) public view returns (uint amount) {
+        Project storage project = projects[projectId];
+        return project.amount;
     }
 }
