@@ -19,15 +19,15 @@ contract ProjectFactory is Ownable {
     }
 
     event NewProject(uint id, string name, uint amount);
-    
+
     Project[] public projects;
     mapping(uint => address) public projectsToOwner;
     mapping(address => uint) ownerProjectsCount;
-    
+
     function createProject(string _name, uint _amount, uint _days) public {
-        uint id = Projects.push(Project(_name, _amount, now, uint(now + _days), OPEN) - 1;
+        uint id = Projects.push(Project(_name, _amount, now, uint(now + _days), OPEN)) - 1;
         projectsToOwner[id] = msg.sender;
         ownerProjectsCount[msg.sender]++;
-        NewProject(id, _name, _amount);
+        emit NewProject(id, _name, _amount);
     }
 }
