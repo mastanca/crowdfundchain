@@ -3,7 +3,7 @@ pragma solidity ^0.4.25;
 import "./Owned.sol";
 import "./SafeMath.sol";
 
-contract ProjectFactory is Ownable {
+contract ProjectFactory is Owned {
     using SafeMath for uint256;
 
     enum States { CLOSE, OPEN, CANCELED }
