@@ -8,7 +8,7 @@ To get all projects first get projectCount and then use that number to get each 
 0xB7B19555B2003C07B73ae1E5440A0AFA3D39E475
 
 ## ABI
-´´´ json
+```json
 [
 	{
 		"constant": true,
@@ -264,4 +264,4 @@ To get all projects first get projectCount and then use that number to get each 
 		"type": "event"
 	}
 ]
-´´´
+```
