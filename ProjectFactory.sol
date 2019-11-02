@@ -16,7 +16,7 @@ contract ProjectFactory is Owned {
         uint creationDate;
         uint endDate;
         States state;
-        uint amountContributed; 
+        uint amountContributed;
         address[] contributorsAddresses;
         mapping(address => uint) contributors;
     }
