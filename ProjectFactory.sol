@@ -1,5 +1,4 @@
 pragma solidity ^0.4.25;
-// To return array of futureTransactions to client
 pragma experimental ABIEncoderV2;
 
 import "./Owned.sol";
