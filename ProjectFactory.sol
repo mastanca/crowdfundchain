@@ -49,17 +49,17 @@ contract ProjectFactory is Owned {
     }
 
     function auditProject(uint projectId) public {
-        Project memory project = projects[projectId];
+        Project storage project = projects[projectId];
         if (project.amountContributed >= project.amount) {
             project.state = States.CLOSE;
-            projectsToOwner[project.id].transfer(project.amountContributed);
-        } else if (project.endDate < now()) {
+            projectsToOwner[projectId].transfer(project.amountContributed);
+        } else if (project.endDate < now) {
             project.state = States.CANCELED;
             for (uint index = 0; index < project.contributorsAddresses.length; index++) {
                 address contributor = project.contributorsAddresses[index];
                 contributor.transfer(project.contributors[contributor]);
             }
         }
-        emit ProjectStateChanged(project.id, project.name, project.state);
+        emit ProjectStateChanged(projectId, project.name, project.state);
     }
 }
