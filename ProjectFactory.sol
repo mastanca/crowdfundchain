@@ -45,16 +45,16 @@ contract ProjectFactory is Owned {
         project.amountContributed += msg.value;
     }
 
-    function getAmountContributedFor(uint projectId) public view returns (uint amount) {
-        Project storage project = projects[projectId];
+    function getAmountContributedFor(uint _projectId) public view returns (uint amount) {
+        Project storage project = projects[_projectId];
         return project.amountContributed;
     }
 
-    function auditProject(uint projectId) public {
-        Project storage project = projects[projectId];
+    function auditProject(uint _projectId) public {
+        Project storage project = projects[_projectId];
         if (project.amountContributed >= project.amount) {
             project.state = States.CLOSED;
-            projectsToOwner[projectId].transfer(project.amountContributed);
+            projectsToOwner[_projectId].transfer(project.amountContributed);
             project.amountContributed = 0;
         } else if (project.endDate < now) {
             project.state = States.CANCELED;
@@ -63,6 +63,6 @@ contract ProjectFactory is Owned {
                 contributor.transfer(project.contributors[contributor]);
             }
         }
-        emit ProjectStateChanged(projectId, project.name, project.state);
+        emit ProjectStateChanged(_projectId, project.name, project.state);
     }
 }
