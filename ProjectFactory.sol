@@ -8,7 +8,7 @@ import "./SafeMath.sol";
 contract ProjectFactory is Owned {
     using SafeMath for uint256;
 
-    enum States { CLOSE, OPEN, CANCELED }
+    enum States { CLOSED, OPEN, CANCELED }
 
     struct Project {
         string name;
@@ -27,12 +27,14 @@ contract ProjectFactory is Owned {
     Project[] public projects;
     mapping(uint => Project) projectsMap;
     mapping(uint => address) public projectsToOwner;
+    uint public projectCount;
 
     function createProject(string _name, uint _amount, uint _days) public {
         Project memory project = Project(_name, _amount, now, uint(now + _days), States.OPEN, 0, new address[](10));
         uint id = projects.push(project) - 1;
         projectsToOwner[id] = msg.sender;
         projectsMap[id] = project;
+        projectCount++;
         emit NewProject(id, _name, _amount);
     }
 
@@ -51,8 +53,9 @@ contract ProjectFactory is Owned {
     function auditProject(uint projectId) public {
         Project storage project = projects[projectId];
         if (project.amountContributed >= project.amount) {
-            project.state = States.CLOSE;
+            project.state = States.CLOSED;
             projectsToOwner[projectId].transfer(project.amountContributed);
+            project.amountContributed = 0;
         } else if (project.endDate < now) {
             project.state = States.CANCELED;
             for (uint index = 0; index < project.contributorsAddresses.length; index++) {
