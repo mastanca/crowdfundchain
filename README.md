@@ -5,7 +5,7 @@ Crowdfunding smart contract built with solidity for 75.68 FIUBA
 To get all projects first get projectCount and then use that number to get each project using project public variable.
 
 ## Deployed contract address (Rinkeby test network)
-0xB7B19555B2003C07B73ae1E5440A0AFA3D39E475
+0x692a70D2e424a56D2C6C27aA97D1a86395877b3A
 
 ## ABI
 ```json
