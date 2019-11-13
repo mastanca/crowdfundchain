@@ -29,7 +29,7 @@ contract ProjectFactory is Owned {
     uint public projectCount;
 
     function createProject(string _name, uint _amount, uint _days) public {
-        Project memory project = Project(_name, _amount, now, uint(now + _days), States.OPEN, 0, new address[](10));
+        Project memory project = Project(_name, _amount, now, uint(now + _days * 1 days), States.OPEN, 0, new address[](10));
         uint id = projects.push(project) - 1;
         projectsToOwner[id] = msg.sender;
         projectsMap[id] = project;
